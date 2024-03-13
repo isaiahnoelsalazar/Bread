@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.androidLibrary)
+    id 'maven-publish'
 }
 
 android {
@@ -17,11 +18,39 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            consumerProguardFiles 'consumer-rules.pro'
         }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'com.github.saiaaaaaaa'
+            artifactId = 'Bread'
+            version = "1.0"
+            pom {
+                description = 'Bread'
+            }
+        }
+    }
+    repositories {
+        mavenLocal()
     }
 }
 
