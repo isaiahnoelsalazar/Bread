@@ -31,8 +31,31 @@ RecyclerView rv = findViewById(R.id.rv);
 ```
 - Initialize SimpleList using context, RecyclerView reference, and data reference
 ```
-SimpleList simpleList = new SimpleList(context, rv, data);
+SimpleList simpleList = new SimpleList(context, rv, data); // simple list
 ```
+#### *Other initialization methods*
+- SimpleList with item click
+```
+public class MyClass extends AppCompatAcitivty implements SimpleListAdapter.OnItemClickListener {
+    /* other existing code */
+    SimpleList simpleList = new SimpleList(context, rv, data, this);
+}
+```
+- SimpleList with item long click
+```
+public class MyClass extends AppCompatAcitivty implements SimpleListAdapter.OnItemLongClickListener {
+    /* other existing code */
+    SimpleList simpleList = new SimpleList(context, rv, data, this);
+}
+```
+- SimpleList with item click and item long click
+```
+public class MyClass extends AppCompatAcitivty implements SimpleListAdapter.OnItemClickListener, SimpleListAdapter.OnItemLongClickListener {
+    /* other existing code */
+    SimpleList simpleList = new SimpleList(context, rv, data, this, this);
+}
+```
+> Keyword 'this' refers to implementation SimpleListAdapter.OnItemClickListener and/or SimpleListAdapter.OnItemLongClickListener
 #### Methods
 - Add data to SimpleList
 ```

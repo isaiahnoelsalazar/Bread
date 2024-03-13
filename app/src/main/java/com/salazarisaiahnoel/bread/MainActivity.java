@@ -1,7 +1,9 @@
 package com.salazarisaiahnoel.bread;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,11 +14,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.salazarisaiahnoel.listpack.SimpleList;
+import com.salazarisaiahnoel.listpack.adapters.SimpleListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SimpleListAdapter.OnItemClickListener, SimpleListAdapter.OnItemLongClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
         RecyclerView rv = findViewById(R.id.rv);
 
-        SimpleList simpleList = new SimpleList(this, rv, data);
+        SimpleList simpleList = new SimpleList(this, rv, data, this, this);
         simpleList.setItemPadding(16);
 
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -46,5 +49,15 @@ public class MainActivity extends AppCompatActivity {
                 simpleList.addItem("Sample text");
             }
         });
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        Toast.makeText(this, "Tap", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onItemLongClick(int position) {
+        Toast.makeText(this, "Long", Toast.LENGTH_SHORT).show();
     }
 }

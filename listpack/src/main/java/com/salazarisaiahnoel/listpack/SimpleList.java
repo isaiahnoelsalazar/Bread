@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.salazarisaiahnoel.listpack.adapters.SimpleListAdapter;
+
 import java.util.List;
 
 public class SimpleList {
@@ -19,6 +21,9 @@ public class SimpleList {
     RecyclerView rv;
     LinearLayoutManager llm;
     SimpleListAdapter sla;
+    int clickListener = 0;
+    SimpleListAdapter.OnItemClickListener listener;
+    SimpleListAdapter.OnItemLongClickListener listenerLong;
 
     public SimpleList(Context context, RecyclerView rv, List<String> data){
         this.context = context;
@@ -26,6 +31,41 @@ public class SimpleList {
         this.rv = rv;
         llm = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         rv.setLayoutManager(llm);
+        clickListener = 0;
+        refresh();
+    }
+
+    public SimpleList(Context context, RecyclerView rv, List<String> data, SimpleListAdapter.OnItemClickListener listener){
+        this.context = context;
+        this.data = data;
+        this.rv = rv;
+        llm = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        rv.setLayoutManager(llm);
+        clickListener = 1;
+        this.listener = listener;
+        refresh();
+    }
+
+    public SimpleList(Context context, RecyclerView rv, List<String> data, SimpleListAdapter.OnItemLongClickListener listenerLong){
+        this.context = context;
+        this.data = data;
+        this.rv = rv;
+        llm = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        rv.setLayoutManager(llm);
+        clickListener = 2;
+        this.listenerLong = listenerLong;
+        refresh();
+    }
+
+    public SimpleList(Context context, RecyclerView rv, List<String> data, SimpleListAdapter.OnItemClickListener listener, SimpleListAdapter.OnItemLongClickListener listenerLong){
+        this.context = context;
+        this.data = data;
+        this.rv = rv;
+        llm = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        rv.setLayoutManager(llm);
+        clickListener = 3;
+        this.listener = listener;
+        this.listenerLong = listenerLong;
         refresh();
     }
 
@@ -44,75 +84,96 @@ public class SimpleList {
     }
 
     void refresh(){
-        sla = new SimpleListAdapter(data);
-        rv.setAdapter(sla);
+        switch (clickListener){
+            case 1:
+                try {
+                    int paddingAll = sla.getItemPadding();
+                    int paddingLeft = sla.getItemPadding1();
+                    int paddingTop = sla.getItemPadding2();
+                    int paddingRight = sla.getItemPadding3();
+                    int paddingBottom = sla.getItemPadding4();
+                    boolean singlePadding = sla.getSinglePadding();
+                    sla = new SimpleListAdapter(clickListener, data, listener);
+                    rv.setAdapter(sla);
+                    if (singlePadding){
+                        setItemPadding(paddingAll);
+                    } else {
+                        setItemPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
+                    }
+                } catch (Exception ignored){
+                    sla = new SimpleListAdapter(clickListener, data, listener);
+                    rv.setAdapter(sla);
+                }
+                break;
+            case 2:
+                try {
+                    int paddingAll = sla.getItemPadding();
+                    int paddingLeft = sla.getItemPadding1();
+                    int paddingTop = sla.getItemPadding2();
+                    int paddingRight = sla.getItemPadding3();
+                    int paddingBottom = sla.getItemPadding4();
+                    boolean singlePadding = sla.getSinglePadding();
+                    sla = new SimpleListAdapter(clickListener, data, listenerLong);
+                    rv.setAdapter(sla);
+                    if (singlePadding){
+                        setItemPadding(paddingAll);
+                    } else {
+                        setItemPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
+                    }
+                } catch (Exception ignored){
+                    sla = new SimpleListAdapter(clickListener, data, listenerLong);
+                    rv.setAdapter(sla);
+                }
+                break;
+            case 3:
+                try {
+                    int paddingAll = sla.getItemPadding();
+                    int paddingLeft = sla.getItemPadding1();
+                    int paddingTop = sla.getItemPadding2();
+                    int paddingRight = sla.getItemPadding3();
+                    int paddingBottom = sla.getItemPadding4();
+                    boolean singlePadding = sla.getSinglePadding();
+                    sla = new SimpleListAdapter(clickListener, data, listener, listenerLong);
+                    rv.setAdapter(sla);
+                    if (singlePadding){
+                        setItemPadding(paddingAll);
+                    } else {
+                        setItemPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
+                    }
+                } catch (Exception ignored){
+                    sla = new SimpleListAdapter(clickListener, data, listener, listenerLong);
+                    rv.setAdapter(sla);
+                }
+                break;
+            default:
+                try {
+                    int paddingAll = sla.getItemPadding();
+                    int paddingLeft = sla.getItemPadding1();
+                    int paddingTop = sla.getItemPadding2();
+                    int paddingRight = sla.getItemPadding3();
+                    int paddingBottom = sla.getItemPadding4();
+                    boolean singlePadding = sla.getSinglePadding();
+                    sla = new SimpleListAdapter(clickListener, data);
+                    rv.setAdapter(sla);
+                    if (singlePadding){
+                        setItemPadding(paddingAll);
+                    } else {
+                        setItemPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
+                    }
+                } catch (Exception ignored){
+                    sla = new SimpleListAdapter(clickListener, data);
+                    rv.setAdapter(sla);
+                }
+                break;
+        }
+
     }
 
     public void setItemPadding(int value){
-        float scale = context.getResources().getDisplayMetrics().density;
-        sla.setItemPadding((int) (value * scale + 0.5f));
+        sla.setItemPadding(value);
     }
 
     public void setItemPadding(int value1, int value2, int value3, int value4){
-        float scale = context.getResources().getDisplayMetrics().density;
-        sla.setItemPadding((int) (value1 * scale + 0.5f), (int) (value2 * scale + 0.5f), (int) (value3 * scale + 0.5f), (int) (value4 * scale + 0.5f));
-    }
-}
-
-class SimpleListAdapter extends RecyclerView.Adapter<SimpleListAdapter.SimpleListHolder> {
-
-    List<String> data;
-    int itemPadding = 0, itemPadding1 = 0, itemPadding2 = 0, itemPadding3 = 0, itemPadding4 = 0;
-    boolean singlePadding = false;
-
-    public SimpleListAdapter(List<String> data){
-        this.data = data;
-    }
-
-    public void setItemPadding(int value){
-        singlePadding = true;
-        itemPadding = value;
-    }
-
-    public void setItemPadding(int value1, int value2, int value3, int value4){
-        singlePadding = false;
-        itemPadding1 = value1;
-        itemPadding2 = value2;
-        itemPadding3 = value3;
-        itemPadding4 = value4;
-    }
-
-    @NonNull
-    @Override
-    public SimpleListHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.simple_list_item, parent, false);
-        SimpleListHolder slh = new SimpleListHolder(v);
-        if (singlePadding){
-            slh.button.setPadding(itemPadding, itemPadding, itemPadding, itemPadding);
-        } else {
-            slh.button.setPadding(itemPadding1, itemPadding2, itemPadding3, itemPadding4);
-        }
-        return slh;
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull SimpleListHolder holder, int position) {
-        holder.button.setText(data.get(position));
-    }
-
-    @Override
-    public int getItemCount() {
-        return data.size();
-    }
-
-    class SimpleListHolder extends RecyclerView.ViewHolder{
-
-        Button button;
-
-        public SimpleListHolder(@NonNull View itemView) {
-            super(itemView);
-
-            button = itemView.findViewById(R.id.simple_list_item_id);
-        }
+        sla.setItemPadding(value1, value2, value3, value4);
     }
 }

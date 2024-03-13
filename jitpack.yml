@@ -4,4 +4,4 @@ before_install:
   - ./scripts/prepareJitpackEnvironment.sh
 install:
   - FILE="-Dfile=listpack-release.aar"
-  - mvn install:install-file $FILE -DgroupId=com.github.saiaaaaaaa -DartifactId=Bread -Dversion=1.0.1 -Dpackaging=aar -DgeneratePom=true
+  - mvn install:install-file $FILE -DgroupId=com.github.saiaaaaaaa -DartifactId=Bread -Dversion=1.0.2 -Dpackaging=aar -DgeneratePom=true
