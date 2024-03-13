@@ -14,22 +14,46 @@ import java.util.List;
 
 public class SimpleList {
 
-    static LinearLayoutManager llm;
-    static SimpleListAdapter sla;
+    Context context;
+    List<String> data;
+    RecyclerView rv;
+    LinearLayoutManager llm;
+    SimpleListAdapter sla;
 
-    public static void create(Context context, List<String> data, RecyclerView rv){
+    public SimpleList(Context context, RecyclerView rv, List<String> data){
+        this.context = context;
+        this.data = data;
+        this.rv = rv;
         llm = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-        sla = new SimpleListAdapter(data);
         rv.setLayoutManager(llm);
+        refresh();
+    }
+
+    public void addItem(String a){
+        data.add(a);
+        refresh();
+    }
+
+    public void removeItem(int position){
+        data.remove(position);
+        refresh();
+    }
+
+    public List<String> getData(){
+        return data;
+    }
+
+    void refresh(){
+        sla = new SimpleListAdapter(data);
         rv.setAdapter(sla);
     }
 
-    public static void setItemPadding(Context context, int value){
+    public void setItemPadding(int value){
         float scale = context.getResources().getDisplayMetrics().density;
         sla.setItemPadding((int) (value * scale + 0.5f));
     }
 
-    public static void setItemPadding(Context context, int value1, int value2, int value3, int value4){
+    public void setItemPadding(int value1, int value2, int value3, int value4){
         float scale = context.getResources().getDisplayMetrics().density;
         sla.setItemPadding((int) (value1 * scale + 0.5f), (int) (value2 * scale + 0.5f), (int) (value3 * scale + 0.5f), (int) (value4 * scale + 0.5f));
     }
