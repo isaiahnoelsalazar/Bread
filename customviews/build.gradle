@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'com.salazarisaiahnoel.listpack'
+    namespace 'com.salazarisaiahnoel.customviews'
     compileSdk 34
 
     defaultConfig {
