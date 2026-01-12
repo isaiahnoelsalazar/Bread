@@ -1,4 +1,5 @@
-# Note: This dependency is deprecated and is obsolete. It now exists for archival purposes only.
+﻿> [!NOTE]
+> This Android dependency is deprecated and will not be updated anymore.
 # How to use Bread
 - Import a library available below
 # How to import Bread
